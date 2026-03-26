@@ -1,0 +1,59 @@
+---
+title: "Ejections"
+author: "August Decz and Oliver Schramm"
+format: html
+editor: visual
+---
+
+# Ejections
+
+## Data Upload and Package Loading
+
+```{r}
+library(car)
+library(tidyverse)
+library(MASS)
+library(binom)
+library(janitor)
+### Load other stuff as needed
+ejections <- read_csv("ejections_clean.csv")
+
+#### NOTES ON DATA CHANGES
+## Changing DH (Game Number) to 0 for non-double-header games, 1 for Game 1, and 2 for Game 2
+## Dropping all obs. where inning = -1 (Inning Unknown) and making all extra innings ejections have inning X
+## Will attempt to group and encode ejection reasons to make that a numeric categorical variable
+
+# ejections <- ejections %>%
+#   clean_names() %>%
+#   filter(inning != -1) %>%
+#   mutate(inning = ifelse(inning > 9, "X", inning),
+#          dh = ifelse(is.na(dh), 0, dh))
+# 
+# ejections <- ejections %>%
+#   mutate(reason = case_when(
+#     str_detect(reason, regex("call", ignore_case = T)) ~ "Call on Field",
+#     str_detect(reason, regex("argu", ignore_case = T)) ~ "Arguing",
+#     str_detect(reason, regex("balls|strikes|foul|swing",
+#                              ignore_case = T)) ~ "Balls and Strikes",
+#     str_detect(reason, regex("brawl|fight|clear|charg", ignore_case = T)) ~ "Fighting",
+#     str_detect(reason, regex(
+#       "throwing|threw|push|HBP|intent|hit|spike|beanball|shov",
+#       ignore_case = T)) ~ "Aggression",
+#     str_detect(reason, regex(
+#       "jock|umpire|yelling|language|vulgar|heckling|profanity|inciting|gesture",
+#       ignore_case = T)) ~ "Harrassment",
+#     str_detect(reason, regex(
+#       "illegal|coating|rubbing|scuff|discoloring|damaging|doctor|spit|substance|pine|dirt",
+#       ignore_case = T)) ~ "Cheating",
+#     TRUE ~ "Other"
+#   ))
+# 
+# write_csv(ejections, "ejections_clean.csv")
+```
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
