@@ -17,7 +17,8 @@ head(w.n)
 tail(w.n)
 
 # Then refit model using aggregated data
-mod.fit.bin <- glm(formula = success/trials ~ distance, weights = trials, family = binomial(link = logit), data = w.n)
+mod.fit.bin <- glm(formula = success/trials ~ distance, weights = trials, 
+                   family = binomial(link = logit), data = w.n)
 summary(mod.fit.bin)
 
 # Show how to find the hat matrix using matrix algebra
@@ -158,3 +159,4 @@ round(HL$pear, digits = 1)
 o.r.test(obj = mod.fit.bin)
 
 stukel.test(obj = mod.fit.bin)
+
