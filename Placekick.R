@@ -109,6 +109,9 @@ lines(x = w_n$pred[order_dist], y = predict(smooth_stand)[order_dist],
       col = "red",
       lwd = 1)
 
+mod_fit_bin <- glm(formula = proportion ~ distance, weights = trials,
+                   family = binomial(link = logit), data = w_n)
+
 # GOF Statistics
 # Deviance/Residual D.F. ratio
 rdev <- mod_fit_bin$deviance
@@ -122,19 +125,11 @@ c(rdev, dfr, ddf, thresh2, thresh3)
 # For GOF tests, we'll have to use packages
 # HL Test
 library(ResourceSelection)
+hoslem.test(w_n$proportion, fitted(mod_fit_bin), g = 10)
+
 # Osius Rojek test and Stukel's Test
 library(CLRtools)
-
-# For the Hosmer-Lemeshow test, you input your observed values and 
-# predicted values of y along with your number of groups. 10 is default
-hoslem.test(w_n$success / w_n$trials, fitted(mod_fit_bin), g = 10)
-# Fail to Reject H0, but this doesn't mean our model has a good fit.
-
 # For the Osius-Rojek test, you only need to input your fitted model
 osius_rojek(mod_fit_bin)
-# Reject H0, the model has a poor fit
-
-# Stukel's Test
-# For Stukel's test, you only need to input your fitted model. It automatically 
-# adds the two terms
+# Stukel's Test. Only model as input
 stukels_test(mod_fit_bin)
